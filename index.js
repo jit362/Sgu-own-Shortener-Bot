@@ -23,22 +23,28 @@ const bot = new TelegramBot(botToken, { polling: true });
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   const username = msg.from.username;
-  const welcomeMessage = `Hello, ${username}!\n\n`
-    + 'Welcome to the URL Shortener Bot!\n'
-    + 'You can use this bot to shorten URLs using the indishort.live service.\n\n'
-    + 'To shorten a URL, just type or paste the URL directly in the chat, and the bot will provide you with the shortened URL.\n\n'
-    + 'If you haven\'t set your MyBios API token yet, use the command:\n/setarklinks YOUR_Indiahort_API_TOKEN\n\n'
-    + 'Now, go ahead and try it out!';
+  const welcomeMessage = **`Hello, ${username}!\n\n`
+    + `Welcome To Indishort Links Bot\n`
+    + `I'm indishort.live Official Link Converter Bot 🤖 I Can Convert Bulk Links To Your Short Links From Direct Your indishort.live Account With Just a Simple Click 🚀\n\n`
+    + `How To Use 🤔\n\n`
+    + `✅1. Go To https://indishort.live & Complete Your Registration.\n`
+    + `✅2. Get Your API https://indishort.live/member/tools/api Copy Your API\n`
+    + `✅3. Add your API using command /api \n`
+    + `Example : /api  c49399f821fc020161bc2a31475ec59f35ae5b4b\n\n`
+    + `For More Help, Contact @jit362\n\n`
+    + `ᴄᴜʀʀᴇɴᴛ sᴇʟᴇᴄᴛᴇᴅ ᴍᴇᴛʜᴏᴅ: shortener\n\n`
+    + `Made with ❤️ By: indishort.live`**;
+;
 
   bot.sendMessage(chatId, welcomeMessage);
 });
 
-// Command: /setarklinks
-bot.onText(/\/setarklinks (.+)/, (msg, match) => {
+// Command: /setapi
+bot.onText(/\/setapi (.+)/, (msg, match) => {
   const chatId = msg.chat.id;
   const userToken = match[1].trim(); // Get the API token provided by the user
 
-  // Save the user's MyBios API token to the database
+  // Save the user's Indishort API token to the database
   saveUserToken(chatId, userToken);
 
   const response = `Indishort API token set successfully. ✅️ Your token: ${userToken}`;
@@ -58,18 +64,19 @@ bot.on('message', (msg) => {
 
 // Function to shorten the URL and send the result
 async function shortenUrlAndSend(chatId, Url) {
-  // Retrieve the user's MyBios API token from the database
-  const arklinksToken = getUserToken(chatId);
+  // Retrieve the user's Indishort API token from the database
+  const IndishortToken = getUserToken(chatId);
 
-  if (!arklinksToken) {
-    bot.sendMessage(chatId, 'Please provide your Indishort API token first. Use the command: /setarklinks YOUR_MYBIOS_API_TOKEN');
+  if (!IndishortToken) {
+    bot.sendMessage(chatId, 'Please provide your Indishort API token first. Use the command: /setapi YOUR_INDISHORT_API_TOKEN');
     return;
   }
 
   try {
-    const apiUrl = `https://indishort.live/api?api=${arklinksToken}&url=${Url}`;
+    const apiUrl = `https://indishort.live/api?api=${IndishortToken}&url=${Url}`;
 
-    // Make a request to the MyBios API to shorten the URL
+    // Make a request to the Indishort
+    API to shorten the URL
     const response = await axios.get(apiUrl);
     const shortUrl = response.data.shortenedUrl;
 
@@ -81,14 +88,14 @@ async function shortenUrlAndSend(chatId, Url) {
   }
 }
 
-// Function to save user's MyBios API token to the database (Replit JSON database)
+// Function to save user's Indishort API token to the database (Replit JSON database)
 function saveUserToken(chatId, token) {
   const dbData = getDatabaseData();
   dbData[chatId] = token;
   fs.writeFileSync('database.json', JSON.stringify(dbData, null, 2));
 }
 
-// Function to retrieve user's MyBios API token from the database
+// Function to retrieve user's Indishort API token from the database
 function getUserToken(chatId) {
   const dbData = getDatabaseData();
   return dbData[chatId];
