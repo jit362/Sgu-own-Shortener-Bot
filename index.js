@@ -29,7 +29,7 @@ bot.onText(/\/start/, (msg) => {
   + '**Welcome to the URL Shortener Bot!**\n'
   + '**You can use this bot to shorten URLs using the indishort service.**\n\n'
   + '**You can use this bot to shorten URLs of only Indishort.live shorten service.**\n\n'
-  + '**I am SGU_Short Official Link Converter Bot 🤖 I Can short Bulk Links To Yours Short Links From Direct Your sgushort.rf.gd Account With Just a Simple Clicks. 🚀**\n\n'
+  + '**I am SGU_Short Official Link Converter Bot 🤖 I Can short Bulk Links To Yours Short Links From Direct Your indishort.live Account With Just a Simple Clicks. 🚀**\n\n'
   + '**How To Use Me 👇👇** \n\n'
   + '**✅1. Got To https://indishort.live & Complete Your Registration.**\n\n'
   + '**✅2. Then Copy Your API Key from here https://indishort.live/member/tools/api Copy Your API Only.** \n\n'
@@ -38,18 +38,19 @@ bot.onText(/\/start/, (msg) => {
   + '**⚠️ You must have to send link with https:// or http://**\n\n'
   + '**Made with ❤️ By: @jit362**`;
 
+
   bot.sendMessage(chatId, welcomeMessage);
 });
 
-// Command: /setapi
-bot.onText(/\/setapi (.+)/, (msg, match) => {
+// Command: /setarklinks
+bot.onText(/\/setarklinks (.+)/, (msg, match) => {
   const chatId = msg.chat.id;
   const userToken = match[1].trim(); // Get the API token provided by the user
 
   // Save the user's Indishort API token to the database
   saveUserToken(chatId, userToken);
 
-  const response = `Indishort API token set successfully. Your token: ${userToken}`;
+  const response = `Indishort API token set successfully. ✅️ Your token: ${userToken}`;
   bot.sendMessage(chatId, response);
 });
 
@@ -67,47 +68,27 @@ bot.on('message', (msg) => {
 // Function to shorten the URL and send the result
 async function shortenUrlAndSend(chatId, Url) {
   // Retrieve the user's Indishort API token from the database
-  const IndishortToken = getUserToken(chatId);
+  const arklinksToken = getUserToken(chatId);
 
-  if (!IndishortToken) {
-    bot.sendMessage(chatId, 'Please provide your Indishort API token first. Use the command: /setapi YOUR_INDISHORT_API_TOKEN');
+  if (!arklinksToken) {
+    bot.sendMessage(chatId, 'Please provide your Indishort API token first. Use the command: /setarklinks YOUR_INDISHORT_API_TOKEN');
     return;
   }
 
   try {
-    const apiUrl = `https://indishort.live/api?api=${IndishortToken}&url=${Url}`;
+    const apiUrl = `https://indishort.live/api?api=${arklinksToken}&url=${Url}`;
 
     // Make a request to the Indishort API to shorten the URL
     const response = await axios.get(apiUrl);
     const shortUrl = response.data.shortenedUrl;
 
-    const responseMessage = `Shortened URL: ${shortUrl} or Copy 👇
-    <code>${shortUrl}</code>`;
-
-    // Send a message with clickable link and copy option
-    bot.sendMessage(chatId, responseMessage, {
-      reply_markup: {
-        inline_keyboard: [
-          [
-            { text: 'Open Link', url: shortUrl }, // Button to open the link
-            { text: 'Copy Link', callback_data: shortUrl } // Button to copy the link
-          ]
-        ]
-      }
-    });
+    const responseMessage = `✅️ Here is your Shortened URL: ${shortUrl}`;
+    bot.sendMessage(chatId, responseMessage);
   } catch (error) {
     console.error('Shorten URL Error:', error);
     bot.sendMessage(chatId, 'An error occurred while shortening the URL. Please check your API token and try again.');
   }
 }
-
-// Handle callback queries for the "Copy Link" button
-bot.on('callback_query', (callbackQuery) => {
-  const chatId = callbackQuery.message.chat.id;
-  const shortUrl = callbackQuery.data;
-
-  bot.sendMessage(chatId, `Copied: ${shortUrl}`);
-});
 
 // Function to validate the URL format
 function isValidUrl(url) {
