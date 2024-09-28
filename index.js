@@ -75,13 +75,14 @@ async function shortenUrlAndSend(chatId, Url) {
   }
 
   try {
-    const apiUrl = `https://your-adlinkfly-url/api?api=${IndishortToken}&url=${Url}`;
+    const apiUrl = `https://indishort.live/api?api=${IndishortToken}&url=${Url}`;
 
     // Make a request to the Indishort API to shorten the URL
     const response = await axios.get(apiUrl);
     const shortUrl = response.data.shortenedUrl;
 
-    const responseMessage = `Shortened URL: ${shortUrl}`;
+    const responseMessage = `Shortened URL: ${shortUrl} or Copy 👇
+    <code>${shortUrl}</code>`;
 
     // Send a message with clickable link and copy option
     bot.sendMessage(chatId, responseMessage, {
