@@ -25,17 +25,17 @@ bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   const username = msg.from.username;
   const welcomeMessage = `🤓 Hello, ${username}!\n\n`
-  + '<b>Welcome to the URL Shortener Bot!</b>\n'
-  + '<b>You can use this bot to shorten URLs using the indishort service.</b>\n\n'
-  + '<b>You can use this bot to shorten URLs of only Indishort.live shorten service.</b>\n\n'
-  + '<b>I am SGU_Short Official Link Converter Bot 🤖 I Can short Bulk Links To Yours Short Links From Direct Your indishort.live Account With Just a Simple Clicks. 🚀</b>\n\n'
-  + '<b>How To Use Me 👇👇</b> \n\n'
-  + '<b>✅1. Got To https://indishort.live & Complete Your Registration.</b>\n\n'
-  + '<b>✅2. Then Copy Your API Key from here https://indishort.live/member/tools/api Copy Your API Only.</b> \n\n'
-  + '<b>✅3. Then add your API using command /setarklinks</b> \n\n' 
-  + '<b>Example: /setarklinks c49399f821fc020161bc2a31475ec59f35ae5b4</b>\n\n'
-  + '<b>⚠️ You must have to send link with https:// or http://</b>\n\n'
-  + '<b>Made with ❤️ By: @jit362</b>';
+  + 'Welcome to the URL Shortener Bot!\n'
+  + 'You can use this bot to shorten URLs using the indishort service.\n\n'
+  + 'You can use this bot to shorten URLs of only Indishort.live shorten service.\n\n'
+  + 'I am SGU_Short Official Link Converter Bot 🤖 I Can short Bulk Links To Yours Short Links From Direct Your indishort.live Account With Just a Simple Clicks. 🚀\n\n'
+  + 'How To Use Me 👇👇</b> \n\n'
+  + '✅1. Got To https://indishort.live & Complete Your Registration.\n\n'
+  + '✅2. Then Copy Your API Key from here https://indishort.live/member/tools/api Copy Your API Only. \n\n'
+  + '✅3. Then add your API using command /setarklinks \n\n' 
+  + 'Example: /setarklinks c49399f821fc020161bc2a31475ec59f35ae5b4\n\n'
+  + '⚠️ You must have to send link with https:// or http://\n\n'
+  + 'Made with ❤️ By: @jit362';
 
 
   bot.sendMessage(chatId, welcomeMessage);
@@ -81,7 +81,7 @@ async function shortenUrlAndSend(chatId, Url) {
     const response = await axios.get(apiUrl);
     const shortUrl = response.data.shortenedUrl;
 
-    const responseMessage = `<b>✅️ Here is your Shortened URL:\n\n ${shortUrl}</b>`;
+    const responseMessage = `✅️ Here is your Shortened URL:\n\n ${shortUrl}`;
     bot.sendMessage(chatId, responseMessage);
   } catch (error) {
     console.error('Shorten URL Error:', error);
