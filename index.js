@@ -25,7 +25,6 @@ bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   const username = msg.from.username;
   const welcomeMessage = `Hello, ${username}!\n\n`
-    const welcomeMessage = `Hello, ${username}!\n\n`
   + '**Welcome to the URL Shortener Bot!**\n'
   + '**You can use this bot to shorten URLs using the indishort service.**\n\n'
   + '**You can use this bot to shorten URLs of only Indishort.live shorten service.**\n\n'
