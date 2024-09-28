@@ -29,7 +29,7 @@ bot.onText(/\/start/, (msg) => {
   + 'You can use this bot to shorten URLs using the indishort service.\n\n'
   + 'You can use this bot to shorten URLs of only Indishort.live shorten service.\n\n'
   + 'I am SGU_Short Official Link Converter Bot 🤖 I Can short Bulk Links To Yours Short Links From Direct Your indishort.live Account With Just a Simple Clicks. 🚀\n\n'
-  + 'How To Use Me 👇👇</b> \n\n'
+  + 'How To Use Me 👇👇 \n\n'
   + '✅1. Got To https://indishort.live & Complete Your Registration.\n\n'
   + '✅2. Then Copy Your API Key from here https://indishort.live/member/tools/api Copy Your API Only. \n\n'
   + '✅3. Then add your API using command /setarklinks \n\n' 
