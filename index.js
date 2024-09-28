@@ -26,9 +26,17 @@ bot.onText(/\/start/, (msg) => {
   const welcomeMessage = `Hello, ${username}!\n\n`
     + 'Welcome to the URL Shortener Bot!\n'
     + 'You can use this bot to shorten URLs using the indishort service.\n\n'
-    + 'To shorten a URL, just type or paste the URL directly in the chat, and the bot will provide you with the shortened URL.\n\n'
-    + 'If you haven\'t set your Indishort API token yet, use the command:\n/setapi YOUR_INDISHORT_API_TOKEN\n\n'
-    + 'Now, go ahead and try it out!';
+    + 'You can use this bot to shorten URLs of only Indishort.live shorten service.\n\n'
++ 'I am SGU_Short Official Link Converter Bot 🤖 I Can short Bulk Links To Yours Short Links From Direct Your sgushort.rf.gd Account With Just a Simple Clicks.  🚀\n\n' 
++ 'How To Use Me 👇👇 \n\n'
++ '✅1. Got To https://indishort.live & Complete Your Registration.\n\n'
++ '✅2.Then Copy Your API Key from here https://indishort.live/member/tools/api Copy Your API Only \n\n'
++ '✅3. Tgen add your api using command /setapi \n\n' 
++ 'Example : /setapi c49399f821fc020161bc2a31475ec59f35ae5b4\n\n'
+
+  + '⚠️ You must have to send link with https:// or http://\n\n'
+
+  + 'Made with ❤️ By: @jit362';
 
   bot.sendMessage(chatId, welcomeMessage);
 });
@@ -67,7 +75,7 @@ async function shortenUrlAndSend(chatId, Url) {
   }
 
   try {
-    const apiUrl = `https://your-adlinkfly-url/api?api=${arklinksToken}&url=${Url}`;
+    const apiUrl = `https://indishort.live/api?api=${arklinksToken}&url=${Url}`;
 
     // Make a request to the Indishort API to shorten the URL
     const response = await axios.get(apiUrl);
