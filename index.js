@@ -1,6 +1,7 @@
 const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios');
 const fs = require('fs');
+
 const express = require('express');
 const app = express();
 
@@ -24,19 +25,18 @@ bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   const username = msg.from.username;
   const welcomeMessage = `Hello, ${username}!\n\n`
-    + 'Welcome to the URL Shortener Bot!\n'
-    + 'You can use this bot to shorten URLs using the indishort service.\n\n'
-    + 'You can use this bot to shorten URLs of only Indishort.live shorten service.\n\n'
-+ 'I am SGU_Short Official Link Converter Bot 🤖 I Can short Bulk Links To Yours Short Links From Direct Your sgushort.rf.gd Account With Just a Simple Clicks.  🚀\n\n' 
-+ 'How To Use Me 👇👇 \n\n'
-+ '✅1. Got To https://indishort.live & Complete Your Registration.\n\n'
-+ '✅2.Then Copy Your API Key from here https://indishort.live/member/tools/api Copy Your API Only \n\n'
-+ '✅3. Tgen add your api using command /setapi \n\n' 
-+ 'Example : /setapi c49399f821fc020161bc2a31475ec59f35ae5b4\n\n'
-
-  + '⚠️ You must have to send link with https:// or http://\n\n'
-
-  + 'Made with ❤️ By: @jit362';
+    const welcomeMessage = `Hello, ${username}!\n\n`
+  + '**Welcome to the URL Shortener Bot!**\n'
+  + '**You can use this bot to shorten URLs using the indishort service.**\n\n'
+  + '**You can use this bot to shorten URLs of only Indishort.live shorten service.**\n\n'
+  + '**I am SGU_Short Official Link Converter Bot 🤖 I Can short Bulk Links To Yours Short Links From Direct Your sgushort.rf.gd Account With Just a Simple Clicks. 🚀**\n\n'
+  + '**How To Use Me 👇👇** \n\n'
+  + '**✅1. Got To https://indishort.live & Complete Your Registration.**\n\n'
+  + '**✅2. Then Copy Your API Key from here https://indishort.live/member/tools/api Copy Your API Only.** \n\n'
+  + '**✅3. Then add your API using command /setapi** \n\n' 
+  + '**Example: /setapi c49399f821fc020161bc2a31475ec59f35ae5b4**\n\n'
+  + '**⚠️ You must have to send link with https:// or http://**\n\n'
+  + '**Made with ❤️ By: @jit362**`;
 
   bot.sendMessage(chatId, welcomeMessage);
 });
@@ -67,26 +67,51 @@ bot.on('message', (msg) => {
 // Function to shorten the URL and send the result
 async function shortenUrlAndSend(chatId, Url) {
   // Retrieve the user's Indishort API token from the database
-  const arklinksToken = getUserToken(chatId);
+  const IndishortToken = getUserToken(chatId);
 
-  if (!arklinksToken) {
+  if (!IndishortToken) {
     bot.sendMessage(chatId, 'Please provide your Indishort API token first. Use the command: /setapi YOUR_INDISHORT_API_TOKEN');
     return;
   }
 
   try {
-    const apiUrl = `https://indishort.live/api?api=${arklinksToken}&url=${Url}`;
+    const apiUrl = `https://your-adlinkfly-url/api?api=${IndishortToken}&url=${Url}`;
 
     // Make a request to the Indishort API to shorten the URL
     const response = await axios.get(apiUrl);
     const shortUrl = response.data.shortenedUrl;
 
     const responseMessage = `Shortened URL: ${shortUrl}`;
-    bot.sendMessage(chatId, responseMessage);
+
+    // Send a message with clickable link and copy option
+    bot.sendMessage(chatId, responseMessage, {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            { text: 'Open Link', url: shortUrl }, // Button to open the link
+            { text: 'Copy Link', callback_data: shortUrl } // Button to copy the link
+          ]
+        ]
+      }
+    });
   } catch (error) {
     console.error('Shorten URL Error:', error);
     bot.sendMessage(chatId, 'An error occurred while shortening the URL. Please check your API token and try again.');
   }
+}
+
+// Handle callback queries for the "Copy Link" button
+bot.on('callback_query', (callbackQuery) => {
+  const chatId = callbackQuery.message.chat.id;
+  const shortUrl = callbackQuery.data;
+
+  bot.sendMessage(chatId, `Copied: ${shortUrl}`);
+});
+
+// Function to validate the URL format
+function isValidUrl(url) {
+  const urlPattern = /^(|ftp|http|https):\/\/[^ "]+$/;
+  return urlPattern.test(url);
 }
 
 // Function to save user's Indishort API token to the database (Replit JSON database)
