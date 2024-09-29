@@ -9,9 +9,9 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-const port = 3000;
+const port = 5001;
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server running at http://0.0.0.0:${port}`);
 });
 
 // Retrieve the Telegram bot token from the environment variable
